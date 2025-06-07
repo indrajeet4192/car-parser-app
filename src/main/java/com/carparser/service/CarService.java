@@ -11,7 +11,7 @@ public class CarService {
     public List<Car> filterAndSortCars(List<Car> cars, String brand, Double price, LocalDate date, String sortField, boolean desc) {
         return cars.stream()
                 .filter(c -> brand == null || c.getBrand().equalsIgnoreCase(brand))
-                .filter(c -> price == null || c.getPriceUSD() <= price)
+                .filter(c -> price == null || c.getPrice() <= price)
                 .filter(c -> date == null || c.getReleaseDate().equals(date))
                 .sorted(getComparator(sortField, desc))
                 .collect(Collectors.toList());
@@ -20,7 +20,7 @@ public class CarService {
     private Comparator<Car> getComparator(String field, boolean desc) {
         Comparator<Car> comp;
         if ("price".equalsIgnoreCase(field)) {
-            comp = Comparator.comparing(Car::getPriceUSD);
+            comp = Comparator.comparing(Car::getPrice);
         } else {
             comp = Comparator.comparing(Car::getReleaseDate);
         }
